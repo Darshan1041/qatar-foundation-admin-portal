@@ -1,0 +1,2079 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal – Sky Foundation</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+    <div class="toast" id="toast">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        <span id="toastMsg">Success!</span>
+    </div>
+
+    <!-- Search Container -->
+    <div class="search-container" id="searchContainer">
+        <div class="search-box">
+            <div class="search-input-wrap">
+                <input type="text" placeholder="Search students, courses, analytics..." id="searchInput">
+                <button class="search-close" onclick="closeSearch()">
+                    <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== AUTH SECTION ==================== -->
+    <div class="auth-wrapper" id="authWrapper">
+        <div class="auth-container">
+            <!-- LEFT BRAND PANEL -->
+            <div class="brand-panel">
+                <div class="brand-logo">
+                    <div class="logo-icon">
+                        <img src="https://iconape.com/wp-content/files/hz/20759/png/Qatar-Foundation-01.png" alt="Sky Foundation Logo">
+                    </div>
+                    <div class="brand-logo-text">
+                        <span>Sky Foundation</span>
+                        <span>مؤسسة قطر</span>
+                    </div>
+                </div>
+                <div class="brand-content">
+                    <h1>Universal Skills Passport</h1>
+                    <p>Manage and oversee the institutional skills tracking system with comprehensive admin controls.</p>
+                </div>
+            </div>
+
+            <!-- RIGHT FORM PANEL -->
+            <div class="form-panel">
+
+                <!-- ===== LOGIN ===== -->
+                <div class="form-page active" id="loginPage">
+                    <div class="form-logo">
+                        <img src="https://iconape.com/wp-content/files/hz/20759/png/Qatar-Foundation-01.png" alt="Sky Foundation">
+                        <span>Sky Foundation</span>
+                    </div>
+                    <div class="form-header">
+                        <div class="badge"><svg viewBox="0 0 24 24"><path d="M12 15l-2 5 2-2 2 2-2-5z"/><circle cx="12" cy="9" r="4"/><path d="M5.5 17.5A8.96 8.96 0 0 1 3 11a9 9 0 0 1 18 0c0 2.5-1 4.8-2.5 6.5"/></svg>Admin Login</div>
+                        <h2>Admin Portal</h2>
+                        <p>Sign in to access the administrative dashboard</p>
+                    </div>
+                    <form id="loginForm" novalidate>
+                        <div class="form-group">
+                            <label>Email Address <span class="required">*</span></label>
+                            <div class="input-wrap">
+                                <svg class="input-icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg>
+                                <input type="email" id="loginEmail" placeholder="admin@qf.org.qa" autocomplete="email">
+                            </div>
+                            <div class="error-msg" id="loginEmailErr"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Please enter a valid email address</span></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Password <span class="required">*</span></label>
+                            <div class="input-wrap">
+                                <svg class="input-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                                <input type="password" id="loginPassword" placeholder="Enter your password" autocomplete="current-password">
+                                <button type="button" class="toggle-password" onclick="togglePass('loginPassword',this)"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+                            </div>
+                            <div class="error-msg" id="loginPasswordErr"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Please enter your password</span></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Captcha <span class="required">*</span></label>
+                            <div class="captcha-row">
+                                <div class="captcha-display">
+                                    <span class="captcha-text" id="loginCaptchaText"></span>
+                                    <button type="button" class="captcha-refresh" onclick="generateCaptcha('login')"><svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button>
+                                </div>
+                                <div class="form-group" style="margin-bottom:0">
+                                    <div class="input-wrap">
+                                        <svg class="input-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 12l2 2 4-4"/></svg>
+                                        <input type="text" id="loginCaptchaInput" placeholder="Enter captcha" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="error-msg" id="loginCaptchaErr"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Captcha does not match</span></div>
+                        </div>
+                        <div class="form-options">
+                            <label class="remember-me"><input type="checkbox"><span class="checkmark"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></span><span>Remember me</span></label>
+                            <button type="button" class="link-btn" onclick="showPage('forgotPage')">Forgot password?</button>
+                        </div>
+                        <button type="submit" class="btn-primary">Sign In</button>
+                    </form>
+                    <div class="form-footer">Don't have an account? <button type="button" class="link-btn" onclick="showPage('signupPage')">Create Account</button></div>
+                </div>
+
+                <!-- ===== SIGNUP ===== -->
+                <div class="form-page" id="signupPage">
+                    <button type="button" class="back-to-login" onclick="showPage('loginPage')"><svg viewBox="0 0 24 24"><path d="M19 12H5"/><polyline points="12 19 5 12 12 5"/></svg>Back to Login</button>
+                    <div class="form-logo">
+                        <img src="https://iconape.com/wp-content/files/hz/20759/png/Qatar-Foundation-01.png" alt="Sky Foundation">
+                        <span>Sky Foundation</span>
+                    </div>
+                    <div class="form-header">
+                        <div class="badge"><svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>New Admin</div>
+                        <h2>Create Admin Account</h2>
+                        <p>Register for administrative access</p>
+                    </div>
+                    <form id="signupForm" novalidate>
+                        <div class="form-group">
+                            <label>Full Name <span class="required">*</span></label>
+                            <div class="input-wrap">
+                                <svg class="input-icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
+                                <input type="text" id="signupName" placeholder="Enter your full name">
+                            </div>
+                            <div class="error-msg" id="signupNameErr"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Please enter your full name</span></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address <span class="required">*</span></label>
+                            <div class="input-wrap">
+                                <svg class="input-icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg>
+                                <input type="email" id="signupEmail" placeholder="admin@qf.org.qa">
+                            </div>
+                            <div class="error-msg" id="signupEmailErr"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Please enter a valid email address</span></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Password <span class="required">*</span></label>
+                            <div class="input-wrap">
+                                <svg class="input-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                                <input type="password" id="signupPassword" placeholder="Min 8 characters" oninput="checkStrength(this.value)">
+                                <button type="button" class="toggle-password" onclick="togglePass('signupPassword',this)"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+                            </div>
+                            <div class="password-strength" id="strengthBars"><div class="strength-bar" id="str1"></div><div class="strength-bar" id="str2"></div><div class="strength-bar" id="str3"></div><div class="strength-bar" id="str4"></div></div>
+                            <div class="strength-label" id="strengthLabel"></div>
+                            <div class="error-msg" id="signupPasswordErr"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Password must be at least 8 characters</span></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Confirm Password <span class="required">*</span></label>
+                            <div class="input-wrap">
+                                <svg class="input-icon" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                                <input type="password" id="signupConfirmPassword" placeholder="Re-enter your password">
+                                <button type="button" class="toggle-password" onclick="togglePass('signupConfirmPassword',this)"><svg viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+                            </div>
+                            <div class="error-msg" id="signupConfirmPasswordErr"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Passwords do not match</span></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Captcha <span class="required">*</span></label>
+                            <div class="captcha-row">
+                                <div class="captcha-display"><span class="captcha-text" id="signupCaptchaText"></span><button type="button" class="captcha-refresh" onclick="generateCaptcha('signup')"><svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button></div>
+                                <div class="form-group" style="margin-bottom:0"><div class="input-wrap"><svg class="input-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 12l2 2 4-4"/></svg><input type="text" id="signupCaptchaInput" placeholder="Enter captcha" autocomplete="off"></div></div>
+                            </div>
+                            <div class="error-msg" id="signupCaptchaErr"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Captcha does not match</span></div>
+                        </div>
+                        <button type="submit" class="btn-primary" style="margin-top:6px">Create Account</button>
+                    </form>
+                    <div class="form-footer">Already have an account? <button type="button" class="link-btn" onclick="showPage('loginPage')">Sign In</button></div>
+                </div>
+
+                <!-- ===== FORGOT PASSWORD ===== -->
+                <div class="form-page" id="forgotPage">
+                    <button type="button" class="back-to-login" onclick="showPage('loginPage')"><svg viewBox="0 0 24 24"><path d="M19 12H5"/><polyline points="12 19 5 12 12 5"/></svg>Back to Login</button>
+                    <div class="form-logo">
+                        <img src="https://iconape.com/wp-content/files/hz/20759/png/Qatar-Foundation-01.png" alt="Sky Foundation">
+                        <span>Sky Foundation</span>
+                    </div>
+                    <div class="form-header">
+                        <div class="badge"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Account Recovery</div>
+                        <h2>Reset Password</h2>
+                        <p>Enter your registered email and we'll send you a reset link</p>
+                    </div>
+                    <form id="forgotForm" novalidate>
+                        <div class="form-group">
+                            <label>Email Address <span class="required">*</span></label>
+                            <div class="input-wrap"><svg class="input-icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg><input type="email" id="forgotEmail" placeholder="admin@qf.org.qa"></div>
+                            <div class="error-msg" id="forgotEmailErr"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Please enter a valid email address</span></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Captcha <span class="required">*</span></label>
+                            <div class="captcha-row">
+                                <div class="captcha-display"><span class="captcha-text" id="forgotCaptchaText"></span><button type="button" class="captcha-refresh" onclick="generateCaptcha('forgot')"><svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg></button></div>
+                                <div class="form-group" style="margin-bottom:0"><div class="input-wrap"><svg class="input-icon" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 12l2 2 4-4"/></svg><input type="text" id="forgotCaptchaInput" placeholder="Enter captcha" autocomplete="off"></div></div>
+                            </div>
+                            <div class="error-msg" id="forgotCaptchaErr"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><span>Captcha does not match</span></div>
+                        </div>
+                        <button type="submit" class="btn-primary">Send Reset Link</button>
+                    </form>
+                    <div class="form-footer">Remembered your password? <button type="button" class="link-btn" onclick="showPage('loginPage')">Sign In</button></div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== DASHBOARD SECTION ==================== -->
+    <div class="dashboard-wrapper" id="dashboardWrapper">
+        <!-- Sidebar -->
+        <nav class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <img src="https://iconape.com/wp-content/files/hz/20759/png/Qatar-Foundation-01.png" alt="QF">
+                    <div class="sidebar-logo-text">
+                        <span>مؤسسة قطر</span>
+                        <span>Sky Foundation</span>
+                    </div>
+                </div>
+            </div>
+            <div class="sidebar-profile">
+                <div class="profile-avatar" id="dashAvatar">MC</div>
+                <div class="profile-info">
+                    <div class="profile-name" id="dashName">Megan Carter</div>
+                    <div class="profile-role">Business Administrator</div>
+                </div>
+            </div>
+            <div class="sidebar-nav">
+                <div class="nav-label">Main Menu</div>
+                <button class="nav-item active" data-page="dashboard">
+                    <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                    Dashboard
+                </button>
+                <button class="nav-item" data-page="learner">
+                    <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    Learner Management
+                </button>
+                <button class="nav-item" data-page="verifier">
+                    <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4"/><path d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+                    Verifier Management
+                </button>
+                <button class="nav-item" data-page="collaborator">
+                    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="18" y1="10" x2="22" y2="10"/><line x1="20" y1="8" x2="20" y2="12"/></svg>
+                    Collaborator
+                </button>
+                <button class="nav-item" data-page="opportunity">
+                    <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    Opportunity Management
+                </button>
+                <button class="nav-item" data-page="reports">
+                    <svg viewBox="0 0 24 24"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+                    Reports and Analytics
+                </button>
+            </div>
+            <div class="sidebar-footer">
+                <button class="nav-item logout" onclick="handleLogout()">
+                    <svg viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                    Sign Out
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main -->
+        <main class="dash-main">
+            <header class="topbar">
+                <div style="display:flex;align-items:center;gap:12px;">
+                    <button class="topbar-btn" id="menuToggle" onclick="document.getElementById('sidebar').classList.toggle('open')" style="display:none;">
+                        <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+                    </button>
+                    <h2 id="pageTitle">Dashboard</h2>
+                </div>
+                <div class="topbar-actions">
+                    <button class="topbar-btn" onclick="openSearch()">
+                        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+                    </button>
+                    <button class="topbar-btn" id="notifBtn" onclick="toggleNotifications()">
+                        <svg viewBox="0 0 24 24"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+                        <span class="notif-badge">4</span>
+                    </button>
+                    <button class="topbar-btn" onclick="toggleTheme()">
+                        <svg viewBox="0 0 24 24" id="themeIcon"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                    </button>
+                    
+                    <!-- Notification Dropdown -->
+                    <div class="notification-dropdown" id="notificationDropdown">
+                        <div class="notification-header">
+                            <h3>Notifications</h3>
+                            <button class="mark-read-btn" onclick="markAllRead()">Mark all as read</button>
+                        </div>
+                        <div class="notification-list">
+                            <div class="notif-item unread">
+                                <div class="notif-item-header">
+                                    <span class="notif-title">New Badge Verification</span>
+                                    <span class="notif-time">2m ago</span>
+                                </div>
+                                <p class="notif-message">Sara Mohamed submitted a new badge for verification</p>
+                            </div>
+                            <div class="notif-item unread">
+                                <div class="notif-item-header">
+                                    <span class="notif-title">System Update</span>
+                                    <span class="notif-time">1h ago</span>
+                                </div>
+                                <p class="notif-message">System backup completed successfully</p>
+                            </div>
+                            <div class="notif-item">
+                                <div class="notif-item-header">
+                                    <span class="notif-title">New Registrations</span>
+                                    <span class="notif-time">3h ago</span>
+                                </div>
+                                <p class="notif-message">5 new student registrations approved</p>
+                            </div>
+                            <div class="notif-item">
+                                <div class="notif-item-header">
+                                    <span class="notif-title">Course Completion</span>
+                                    <span class="notif-time">5h ago</span>
+                                </div>
+                                <p class="notif-message">Digital Marketing course has 12 new completions</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="dash-content">
+                <!-- DASHBOARD SECTION -->
+                <div class="dash-section active" id="dashboardSection">
+                    <!-- Stats Row -->
+                    <div class="stats-row">
+                        <div class="stat-card">
+                            <div class="stat-info">
+                                <h4>Total Students in School A</h4>
+                                <div class="stat-value">
+                                    <span>1,200</span>
+                                    <span class="stat-change positive">+10%</span>
+                                </div>
+                            </div>
+                            <div class="stat-icon green">
+                                <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-info">
+                                <h4>Total Teachers in School A</h4>
+                                <div class="stat-value">
+                                    <span>150</span>
+                                    <span class="stat-change positive">+5%</span>
+                                </div>
+                            </div>
+                            <div class="stat-icon blue">
+                                <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-info">
+                                <h4>Total Parent Management</h4>
+                                <div class="stat-value">
+                                    <span>1,260</span>
+                                    <span class="stat-change negative">-2%</span>
+                                </div>
+                            </div>
+                            <div class="stat-icon purple">
+                                <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Analytics Grid -->
+                    <div class="analytics-grid">
+                        <!-- Opportunity Analytics -->
+                        <div class="analytics-card">
+                            <div class="analytics-card-header">
+                                <div>
+                                    <h4>Opportunity Analytics</h4>
+                                </div>
+                                <button class="card-menu-btn">
+                                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+                                </button>
+                            </div>
+                            <div class="tabs">
+                                <button class="tab-btn active" onclick="changeChartPeriod('daily')">Daily</button>
+                                <button class="tab-btn" onclick="changeChartPeriod('weekly')">Weekly</button>
+                                <button class="tab-btn" onclick="changeChartPeriod('monthly')">Monthly</button>
+                                <button class="tab-btn" onclick="changeChartPeriod('quarterly')">Quarterly</button>
+                                <button class="tab-btn" onclick="changeChartPeriod('yearly')">Yearly</button>
+                            </div>
+                            <div class="line-chart-container">
+                                <svg class="line-chart" id="lineChart" viewBox="0 0 400 150" preserveAspectRatio="none">
+                                    <defs>
+                                        <linearGradient id="lineGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                            <stop offset="0%" style="stop-color:rgba(45,122,80,0.3)"/>
+                                            <stop offset="100%" style="stop-color:rgba(45,122,80,0)"/>
+                                        </linearGradient>
+                                    </defs>
+                                    <path id="linePath" d="M0,120 Q50,100 100,80 T200,60 T300,40 T400,30" fill="none" stroke="#2d7a50" stroke-width="2"/>
+                                    <path id="lineArea" d="M0,120 Q50,100 100,80 T200,60 T300,40 T400,30 L400,150 L0,150 Z" fill="url(#lineGradient)"/>
+                                </svg>
+                            </div>
+                            <div class="top-users-section">
+                                <h5>Top user</h5>
+                                <table class="top-users-table">
+                                    <thead>
+                                        <tr>
+                                            <th>UserName</th>
+                                            <th>Name</th>
+                                            <th>Account Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>john_doe</td>
+                                            <td>John Doe</td>
+                                            <td><span class="status-dot active"></span>Active</td>
+                                        </tr>
+                                        <tr>
+                                            <td>sarah_m</td>
+                                            <td>Sarah Mohamed</td>
+                                            <td><span class="status-dot active"></span>Active</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button class="view-more-btn">View More</button>
+                        </div>
+
+                        <!-- Platform Analytics -->
+                        <div class="analytics-card">
+                            <div class="analytics-card-header">
+                                <div>
+                                    <h4>Platform analytics</h4>
+                                    <p>Total Platform analytics for this week</p>
+                                </div>
+                                <button class="card-menu-btn">
+                                    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                </button>
+                            </div>
+                            <div class="bar-chart-container" id="platformBarChart">
+                                <div class="bar-item">
+                                    <div class="bar blue" style="height: 60px;"></div>
+                                    <span class="bar-label">group 1</span>
+                                </div>
+                                <div class="bar-item">
+                                    <div class="bar green" style="height: 90px;"></div>
+                                    <span class="bar-label">group 2</span>
+                                </div>
+                                <div class="bar-item">
+                                    <div class="bar orange" style="height: 45px;"></div>
+                                    <span class="bar-label">group 3</span>
+                                </div>
+                                <div class="bar-item">
+                                    <div class="bar purple" style="height: 75px;"></div>
+                                    <span class="bar-label">group 4</span>
+                                </div>
+                            </div>
+                            <p style="font-size: 12px; color: var(--qf-text-light); margin-top: 12px;">Click here to view more detailed analytics</p>
+                            <button class="view-more-btn">View More</button>
+                        </div>
+                    </div>
+
+                    <!-- Notifications -->
+                    <div class="notifications-card">
+                        <h4>Notifications</h4>
+                        <div class="notification-item">
+                            The report analytics for this month is available in the platform, click <a href__="#">here</a> to view more
+                        </div>
+                        <div class="notification-item">
+                            There are 2 inactive student accounts. Click <a href__="#">here</a> to take action
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LEARNER MANAGEMENT SECTION -->
+                <div class="dash-section" id="learnerSection">
+                    <!-- Action Buttons -->
+                    <div class="students-actions">
+                        <button class="action-btn primary" onclick="openQuickAddModal()">
+                            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                            Quick Add Student
+                        </button>
+                        <button class="action-btn secondary" onclick="openBulkUploadModal()">
+                            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                            Bulk Upload Students
+                        </button>
+                    </div>
+
+                    <!-- Filters -->
+                    <div class="students-filters">
+                        <div class="filter-group">
+                            <label>Status:</label>
+                            <select class="filter-select" id="statusFilter" onchange="filterStudents()">
+                                <option value="all">All Students</option>
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                                <option value="pending">Pending Approval</option>
+                                <option value="deactivated">Deactivated</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>From:</label>
+                            <input type="date" class="date-input" id="dateFrom" onchange="filterStudents()">
+                        </div>
+                        <div class="filter-group">
+                            <label>To:</label>
+                            <input type="date" class="date-input" id="dateTo" onchange="filterStudents()">
+                        </div>
+                    </div>
+
+                    <!-- Learner Stats -->
+                    <div class="learner-stats">
+                        <div class="learner-stat-card">
+                            <h5>Total Students</h5>
+                            <div class="number">1,200</div>
+                        </div>
+                        <div class="learner-stat-card">
+                            <h5>Certified Students</h5>
+                            <div class="number">342</div>
+                        </div>
+                        <div class="learner-stat-card">
+                            <h5>Enrolled Students</h5>
+                            <div class="number">1120</div>
+                        </div>
+                        <div class="learner-stat-card">
+                            <h5>Deactivated Students</h5>
+                            <div class="number">24</div>
+                        </div>
+                    </div>
+
+                    <!-- Students Table -->
+                    <div class="students-table-card">
+                        <h4>All Students</h4>
+                        <table class="students-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Status</th>
+                                    <th>Courses Enrolled</th>
+                                    <th>Certificates</th>
+                                    <th>Last Login</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody id="studentsTableBody">
+                                <tr data-status="active">
+                                    <td>#1001</td>
+                                    <td>Ahmed Al-Mansoori</td>
+                                    <td>ahmed.m@qf.edu.qa</td>
+                                    <td><span class="badge active">Active</span></td>
+                                    <td>5</td>
+                                    <td><span class="badge certified">3 Certified</span></td>
+                                    <td>2 hours ago</td>
+                                </tr>
+                                <tr data-status="inactive">
+                                    <td>#1002</td>
+                                    <td>Fatima Al-Thani</td>
+                                    <td>fatima.t@qf.edu.qa</td>
+                                    <td><span class="badge inactive">Inactive</span></td>
+                                    <td>3</td>
+                                    <td><span class="badge in-progress">1 In Progress</span></td>
+                                    <td>1 day ago</td>
+                                </tr>
+                                <tr data-status="active">
+                                    <td>#1003</td>
+                                    <td>Mohammed Hassan</td>
+                                    <td>mohammed.h@qf.edu.qa</td>
+                                    <td><span class="badge active">Active</span></td>
+                                    <td>7</td>
+                                    <td><span class="badge certified">5 Certified</span></td>
+                                    <td>30 mins ago</td>
+                                </tr>
+                                <tr data-status="pending">
+                                    <td>#1004</td>
+                                    <td>Sarah Ahmed</td>
+                                    <td>sarah.a@qf.edu.qa</td>
+                                    <td><span class="badge pending">Pending Approval</span></td>
+                                    <td>4</td>
+                                    <td><span class="badge in-progress">2 In Progress</span></td>
+                                    <td>3 hours ago</td>
+                                </tr>
+                                <tr data-status="active">
+                                    <td>#1005</td>
+                                    <td>Omar Khalid</td>
+                                    <td>omar.k@qf.edu.qa</td>
+                                    <td><span class="badge active">Active</span></td>
+                                    <td>6</td>
+                                    <td><span class="badge certified">4 Certified</span></td>
+                                    <td>15 mins ago</td>
+                                </tr>
+                                <tr data-status="deactivated">
+                                    <td>#1006</td>
+                                    <td>Noor Abdullah</td>
+                                    <td>noor.a@qf.edu.qa</td>
+                                    <td><span class="badge deactivated">Deactivated</span></td>
+                                    <td>2</td>
+                                    <td><span class="badge in-progress">1 In Progress</span></td>
+                                    <td>5 days ago</td>
+                                </tr>
+                                <tr data-status="active">
+                                    <td>#1007</td>
+                                    <td>Ali Mohamed</td>
+                                    <td>ali.m@qf.edu.qa</td>
+                                    <td><span class="badge active">Active</span></td>
+                                    <td>8</td>
+                                    <td><span class="badge certified">6 Certified</span></td>
+                                    <td>1 hour ago</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Courses Grid -->
+                    <div class="students-table-card">
+                        <h4>Course Management</h4>
+                        <div class="courses-grid">
+                            <div class="course-card">
+                                <div class="course-header">
+                                    <div>
+                                        <h5>Digital Marketing Fundamentals</h5>
+                                        <div class="course-category">Marketing</div>
+                                    </div>
+                                </div>
+                                <div class="course-stats">
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">Enrolled</div>
+                                        <div class="course-stat-value">245</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">Completed</div>
+                                        <div class="course-stat-value">180</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">In Progress</div>
+                                        <div class="course-stat-value">45</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">50% Done</div>
+                                        <div class="course-stat-value">20</div>
+                                    </div>
+                                </div>
+                                <button class="view-course-btn" onclick="openCourseDetails('Digital Marketing Fundamentals', {enrolled: 245, completed: 180, inProgress: 45, halfDone: 20})">View Course Details</button>
+                            </div>
+
+                            <div class="course-card">
+                                <div class="course-header">
+                                    <div>
+                                        <h5>Web Development Bootcamp</h5>
+                                        <div class="course-category">Technology</div>
+                                    </div>
+                                </div>
+                                <div class="course-stats">
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">Enrolled</div>
+                                        <div class="course-stat-value">189</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">Completed</div>
+                                        <div class="course-stat-value">125</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">In Progress</div>
+                                        <div class="course-stat-value">48</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">50% Done</div>
+                                        <div class="course-stat-value">16</div>
+                                    </div>
+                                </div>
+                                <button class="view-course-btn" onclick="openCourseDetails('Web Development Bootcamp', {enrolled: 189, completed: 125, inProgress: 48, halfDone: 16})">View Course Details</button>
+                            </div>
+
+                            <div class="course-card">
+                                <div class="course-header">
+                                    <div>
+                                        <h5>Data Science with Python</h5>
+                                        <div class="course-category">Data Science</div>
+                                    </div>
+                                </div>
+                                <div class="course-stats">
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">Enrolled</div>
+                                        <div class="course-stat-value">312</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">Completed</div>
+                                        <div class="course-stat-value">198</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">In Progress</div>
+                                        <div class="course-stat-value">85</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">50% Done</div>
+                                        <div class="course-stat-value">29</div>
+                                    </div>
+                                </div>
+                                <button class="view-course-btn" onclick="openCourseDetails('Data Science with Python', {enrolled: 312, completed: 198, inProgress: 85, halfDone: 29})">View Course Details</button>
+                            </div>
+
+                            <div class="course-card">
+                                <div class="course-header">
+                                    <div>
+                                        <h5>UI/UX Design Masterclass</h5>
+                                        <div class="course-category">Design</div>
+                                    </div>
+                                </div>
+                                <div class="course-stats">
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">Enrolled</div>
+                                        <div class="course-stat-value">156</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">Completed</div>
+                                        <div class="course-stat-value">112</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">In Progress</div>
+                                        <div class="course-stat-value">32</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">50% Done</div>
+                                        <div class="course-stat-value">12</div>
+                                    </div>
+                                </div>
+                                <button class="view-course-btn" onclick="openCourseDetails('UI/UX Design Masterclass', {enrolled: 156, completed: 112, inProgress: 32, halfDone: 12})">View Course Details</button>
+                            </div>
+
+                            <div class="course-card">
+                                <div class="course-header">
+                                    <div>
+                                        <h5>Business Analytics</h5>
+                                        <div class="course-category">Business</div>
+                                    </div>
+                                </div>
+                                <div class="course-stats">
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">Enrolled</div>
+                                        <div class="course-stat-value">201</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">Completed</div>
+                                        <div class="course-stat-value">145</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">In Progress</div>
+                                        <div class="course-stat-value">42</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">50% Done</div>
+                                        <div class="course-stat-value">14</div>
+                                    </div>
+                                </div>
+                                <button class="view-course-btn" onclick="openCourseDetails('Business Analytics', {enrolled: 201, completed: 145, inProgress: 42, halfDone: 14})">View Course Details</button>
+                            </div>
+
+                            <div class="course-card">
+                                <div class="course-header">
+                                    <div>
+                                        <h5>Mobile App Development</h5>
+                                        <div class="course-category">Technology</div>
+                                    </div>
+                                </div>
+                                <div class="course-stats">
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">Enrolled</div>
+                                        <div class="course-stat-value">178</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">Completed</div>
+                                        <div class="course-stat-value">98</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">In Progress</div>
+                                        <div class="course-stat-value">65</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">50% Done</div>
+                                        <div class="course-stat-value">15</div>
+                                    </div>
+                                </div>
+                                <button class="view-course-btn" onclick="openCourseDetails('Mobile App Development', {enrolled: 178, completed: 98, inProgress: 65, halfDone: 15})">View Course Details</button>
+                            </div>
+
+                            <div class="course-card">
+                                <div class="course-header">
+                                    <div>
+                                        <h5>Cybersecurity Essentials</h5>
+                                        <div class="course-category">Security</div>
+                                    </div>
+                                </div>
+                                <div class="course-stats">
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">Enrolled</div>
+                                        <div class="course-stat-value">267</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">Completed</div>
+                                        <div class="course-stat-value">189</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">In Progress</div>
+                                        <div class="course-stat-value">55</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">50% Done</div>
+                                        <div class="course-stat-value">23</div>
+                                    </div>
+                                </div>
+                                <button class="view-course-btn" onclick="openCourseDetails('Cybersecurity Essentials', {enrolled: 267, completed: 189, inProgress: 55, halfDone: 23})">View Course Details</button>
+                            </div>
+
+                            <div class="course-card">
+                                <div class="course-header">
+                                    <div>
+                                        <h5>Project Management Professional</h5>
+                                        <div class="course-category">Management</div>
+                                    </div>
+                                </div>
+                                <div class="course-stats">
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">Enrolled</div>
+                                        <div class="course-stat-value">234</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">Completed</div>
+                                        <div class="course-stat-value">167</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">In Progress</div>
+                                        <div class="course-stat-value">52</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">50% Done</div>
+                                        <div class="course-stat-value">15</div>
+                                    </div>
+                                </div>
+                                <button class="view-course-btn" onclick="openCourseDetails('Project Management Professional', {enrolled: 234, completed: 167, inProgress: 52, halfDone: 15})">View Course Details</button>
+                            </div>
+
+                            <div class="course-card">
+                                <div class="course-header">
+                                    <div>
+                                        <h5>Artificial Intelligence Basics</h5>
+                                        <div class="course-category">AI/ML</div>
+                                    </div>
+                                </div>
+                                <div class="course-stats">
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">Enrolled</div>
+                                        <div class="course-stat-value">298</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">Completed</div>
+                                        <div class="course-stat-value">176</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">In Progress</div>
+                                        <div class="course-stat-value">98</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">50% Done</div>
+                                        <div class="course-stat-value">24</div>
+                                    </div>
+                                </div>
+                                <button class="view-course-btn" onclick="openCourseDetails('Artificial Intelligence Basics', {enrolled: 298, completed: 176, inProgress: 98, halfDone: 24})">View Course Details</button>
+                            </div>
+
+                            <div class="course-card">
+                                <div class="course-header">
+                                    <div>
+                                        <h5>Cloud Computing with AWS</h5>
+                                        <div class="course-category">Cloud</div>
+                                    </div>
+                                </div>
+                                <div class="course-stats">
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">Enrolled</div>
+                                        <div class="course-stat-value">221</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">Completed</div>
+                                        <div class="course-stat-value">143</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">In Progress</div>
+                                        <div class="course-stat-value">62</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">50% Done</div>
+                                        <div class="course-stat-value">16</div>
+                                    </div>
+                                </div>
+                                <button class="view-course-btn" onclick="openCourseDetails('Cloud Computing with AWS', {enrolled: 221, completed: 143, inProgress: 62, halfDone: 16})">View Course Details</button>
+                            </div>
+
+                            <div class="course-card">
+                                <div class="course-header">
+                                    <div>
+                                        <h5>Blockchain Technology</h5>
+                                        <div class="course-category">Emerging Tech</div>
+                                    </div>
+                                </div>
+                                <div class="course-stats">
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">Enrolled</div>
+                                        <div class="course-stat-value">187</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">Completed</div>
+                                        <div class="course-stat-value">98</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">In Progress</div>
+                                        <div class="course-stat-value">71</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">50% Done</div>
+                                        <div class="course-stat-value">18</div>
+                                    </div>
+                                </div>
+                                <button class="view-course-btn" onclick="openCourseDetails('Blockchain Technology', {enrolled: 187, completed: 98, inProgress: 71, halfDone: 18})">View Course Details</button>
+                            </div>
+
+                            <div class="course-card">
+                                <div class="course-header">
+                                    <div>
+                                        <h5>Content Marketing Strategy</h5>
+                                        <div class="course-category">Marketing</div>
+                                    </div>
+                                </div>
+                                <div class="course-stats">
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">Enrolled</div>
+                                        <div class="course-stat-value">165</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">Completed</div>
+                                        <div class="course-stat-value">123</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">In Progress</div>
+                                        <div class="course-stat-value">35</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">50% Done</div>
+                                        <div class="course-stat-value">7</div>
+                                    </div>
+                                </div>
+                                <button class="view-course-btn" onclick="openCourseDetails('Content Marketing Strategy', {enrolled: 165, completed: 123, inProgress: 35, halfDone: 7})">View Course Details</button>
+                            </div>
+
+                            <div class="course-card">
+                                <div class="course-header">
+                                    <div>
+                                        <h5>Financial Management</h5>
+                                        <div class="course-category">Finance</div>
+                                    </div>
+                                </div>
+                                <div class="course-stats">
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">Enrolled</div>
+                                        <div class="course-stat-value">209</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">Completed</div>
+                                        <div class="course-stat-value">156</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">In Progress</div>
+                                        <div class="course-stat-value">41</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">50% Done</div>
+                                        <div class="course-stat-value">12</div>
+                                    </div>
+                                </div>
+                                <button class="view-course-btn" onclick="openCourseDetails('Financial Management', {enrolled: 209, completed: 156, inProgress: 41, halfDone: 12})">View Course Details</button>
+                            </div>
+
+                            <div class="course-card">
+                                <div class="course-header">
+                                    <div>
+                                        <h5>Leadership & Communication</h5>
+                                        <div class="course-category">Soft Skills</div>
+                                    </div>
+                                </div>
+                                <div class="course-stats">
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">Enrolled</div>
+                                        <div class="course-stat-value">276</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">Completed</div>
+                                        <div class="course-stat-value">198</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">In Progress</div>
+                                        <div class="course-stat-value">63</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">50% Done</div>
+                                        <div class="course-stat-value">15</div>
+                                    </div>
+                                </div>
+                                <button class="view-course-btn" onclick="openCourseDetails('Leadership & Communication', {enrolled: 276, completed: 198, inProgress: 63, halfDone: 15})">View Course Details</button>
+                            </div>
+
+                            <div class="course-card">
+                                <div class="course-header">
+                                    <div>
+                                        <h5>Advanced Excel & Analytics</h5>
+                                        <div class="course-category">Data Analysis</div>
+                                    </div>
+                                </div>
+                                <div class="course-stats">
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">Enrolled</div>
+                                        <div class="course-stat-value">198</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">Completed</div>
+                                        <div class="course-stat-value">145</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">In Progress</div>
+                                        <div class="course-stat-value">38</div>
+                                    </div>
+                                    <div class="course-stat">
+                                        <div class="course-stat-label">50% Done</div>
+                                        <div class="course-stat-value">15</div>
+                                    </div>
+                                </div>
+                                <button class="view-course-btn" onclick="openCourseDetails('Advanced Excel & Analytics', {enrolled: 198, completed: 145, inProgress: 38, halfDone: 15})">View Course Details</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VERIFIER MANAGEMENT SECTION -->
+                <div class="dash-section" id="verifierSection">
+                    <!-- Action Buttons -->
+                    <div class="students-actions">
+                        <button class="action-btn primary" onclick="openQuickAddVerifierModal()">
+                            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                            Quick Add Verifier
+                        </button>
+                        <button class="action-btn secondary" onclick="openBulkUploadVerifierModal()">
+                            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                            Bulk Upload Verifiers
+                        </button>
+                    </div>
+
+                    <!-- Filters -->
+                    <div class="students-filters">
+                        <div class="filter-group">
+                            <label>Status:</label>
+                            <select class="filter-select" id="verifierStatusFilter" onchange="filterVerifiers()">
+                                <option value="all">All Verifiers</option>
+                                <option value="active">Active Verifiers</option>
+                                <option value="inactive">Inactive Verifiers</option>
+                                <option value="pending">Pending Verifiers</option>
+                                <option value="deactivated">Deactivated Verifiers</option>
+                            </select>
+                        </div>
+                        <div class="filter-group">
+                            <label>From:</label>
+                            <input type="date" class="date-input" id="verifierDateFrom" onchange="filterVerifiers()">
+                        </div>
+                        <div class="filter-group">
+                            <label>To:</label>
+                            <input type="date" class="date-input" id="verifierDateTo" onchange="filterVerifiers()">
+                        </div>
+                    </div>
+
+                    <!-- Verifier Stats -->
+                    <div class="learner-stats">
+                        <div class="learner-stat-card">
+                            <h5>Total Verifiers</h5>
+                            <div class="number">150</div>
+                        </div>
+                        <div class="learner-stat-card">
+                            <h5>Active Verifiers</h5>
+                            <div class="number">128</div>
+                        </div>
+                        <div class="learner-stat-card">
+                            <h5>Pending Approval</h5>
+                            <div class="number">12</div>
+                        </div>
+                        <div class="learner-stat-card">
+                            <h5>Total Students Certified</h5>
+                            <div class="number">2,340</div>
+                        </div>
+                    </div>
+
+                    <!-- Verifiers Table -->
+                    <div class="students-table-card">
+                        <h4>All Verifiers / Teachers</h4>
+                        <table class="students-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Status</th>
+                                    <th>Subjects Teaching</th>
+                                    <th>Students Certified</th>
+                                    <th>Join Date</th>
+                                </tr>
+                            </thead>
+                            <tbody id="verifiersTableBody">
+                                <tr data-status="active" onclick="openVerifierDetails('Dr. Hassan Al-Kuwari', {subjects: [{name: 'Data Science', students: 234}, {name: 'Python Programming', students: 189}], totalStudents: 423, certified: 312, inProgress: 89, pending: 22})">
+                                    <td>#V001</td>
+                                    <td>Dr. Hassan Al-Kuwari</td>
+                                    <td>hassan.k@qf.edu.qa</td>
+                                    <td><span class="badge active">Active</span></td>
+                                    <td>2 Subjects</td>
+                                    <td><span class="badge certified">312</span></td>
+                                    <td>Jan 2025</td>
+                                </tr>
+                                <tr data-status="active" onclick="openVerifierDetails('Prof. Aisha Al-Mannai', {subjects: [{name: 'Digital Marketing', students: 298}, {name: 'Content Strategy', students: 145}], totalStudents: 443, certified: 356, inProgress: 67, pending: 20})">
+                                    <td>#V002</td>
+                                    <td>Prof. Aisha Al-Mannai</td>
+                                    <td>aisha.m@qf.edu.qa</td>
+                                    <td><span class="badge active">Active</span></td>
+                                    <td>2 Subjects</td>
+                                    <td><span class="badge certified">356</span></td>
+                                    <td>Mar 2025</td>
+                                </tr>
+                                <tr data-status="inactive" onclick="openVerifierDetails('Dr. Omar Al-Thani', {subjects: [{name: 'Cybersecurity', students: 267}], totalStudents: 267, certified: 189, inProgress: 55, pending: 23})">
+                                    <td>#V003</td>
+                                    <td>Dr. Omar Al-Thani</td>
+                                    <td>omar.t@qf.edu.qa</td>
+                                    <td><span class="badge inactive">Inactive</span></td>
+                                    <td>1 Subject</td>
+                                    <td><span class="badge certified">189</span></td>
+                                    <td>Feb 2025</td>
+                                </tr>
+                                <tr data-status="active" onclick="openVerifierDetails('Ms. Fatima Al-Dosari', {subjects: [{name: 'UI/UX Design', students: 156}, {name: 'Graphic Design', students: 98}], totalStudents: 254, certified: 178, inProgress: 56, pending: 20})">
+                                    <td>#V004</td>
+                                    <td>Ms. Fatima Al-Dosari</td>
+                                    <td>fatima.d@qf.edu.qa</td>
+                                    <td><span class="badge active">Active</span></td>
+                                    <td>2 Subjects</td>
+                                    <td><span class="badge certified">178</span></td>
+                                    <td>Jan 2025</td>
+                                </tr>
+                                <tr data-status="pending" onclick="openVerifierDetails('Dr. Khalid Ahmed', {subjects: [{name: 'Business Analytics', students: 201}], totalStudents: 201, certified: 145, inProgress: 42, pending: 14})">
+                                    <td>#V005</td>
+                                    <td>Dr. Khalid Ahmed</td>
+                                    <td>khalid.a@qf.edu.qa</td>
+                                    <td><span class="badge pending">Pending Approval</span></td>
+                                    <td>1 Subject</td>
+                                    <td><span class="badge certified">145</span></td>
+                                    <td>Feb 2026</td>
+                                </tr>
+                                <tr data-status="active" onclick="openVerifierDetails('Prof. Sara Al-Hashemi', {subjects: [{name: 'Web Development', students: 189}, {name: 'Mobile Development', students: 178}], totalStudents: 367, certified: 223, inProgress: 113, pending: 31})">
+                                    <td>#V006</td>
+                                    <td>Prof. Sara Al-Hashemi</td>
+                                    <td>sara.h@qf.edu.qa</td>
+                                    <td><span class="badge active">Active</span></td>
+                                    <td>2 Subjects</td>
+                                    <td><span class="badge certified">223</span></td>
+                                    <td>Apr 2025</td>
+                                </tr>
+                                <tr data-status="deactivated" onclick="openVerifierDetails('Dr. Mohammed Al-Jaber', {subjects: [{name: 'Cloud Computing', students: 221}], totalStudents: 221, certified: 143, inProgress: 62, pending: 16})">
+                                    <td>#V007</td>
+                                    <td>Dr. Mohammed Al-Jaber</td>
+                                    <td>mohammed.j@qf.edu.qa</td>
+                                    <td><span class="badge deactivated">Deactivated</span></td>
+                                    <td>1 Subject</td>
+                                    <td><span class="badge certified">143</span></td>
+                                    <td>May 2025</td>
+                                </tr>
+                                <tr data-status="active" onclick="openVerifierDetails('Ms. Noura Al-Ansari', {subjects: [{name: 'Leadership Skills', students: 276}, {name: 'Communication', students: 134}], totalStudents: 410, certified: 289, inProgress: 98, pending: 23})">
+                                    <td>#V008</td>
+                                    <td>Ms. Noura Al-Ansari</td>
+                                    <td>noura.a@qf.edu.qa</td>
+                                    <td><span class="badge active">Active</span></td>
+                                    <td>2 Subjects</td>
+                                    <td><span class="badge certified">289</span></td>
+                                    <td>Jun 2025</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- COLLABORATOR SECTION (New) -->
+                <div class="dash-section" id="collaboratorSection">
+                    <h4 style="font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 600; color: var(--qf-text); margin-bottom: 24px;">Collaborator Management</h4>
+                    
+                    <!-- Collaborators Table -->
+                    <div class="students-table-card">
+                        <h4>All Collaborators / Verifiers</h4>
+                        <p style="color: var(--qf-text-light); margin-bottom: 20px;">Click on any collaborator to view their submitted courses for approval</p>
+                        <table class="students-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Courses Submitted</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr onclick="openCollaboratorCourses('Dr. Hassan Al-Kuwari', 'Data Science Expert')">
+                                    <td>#C001</td>
+                                    <td>Dr. Hassan Al-Kuwari</td>
+                                    <td>hassan.k@qf.edu.qa</td>
+                                    <td>Senior Verifier</td>
+                                    <td>12</td>
+                                    <td><span class="badge active">Active</span></td>
+                                    <td><button class="view-course-btn" style="width: auto; padding: 6px 16px;" onclick="event.stopPropagation(); openCollaboratorCourses('Dr. Hassan Al-Kuwari', 'Data Science Expert')">View Courses</button></td>
+                                </tr>
+                                <tr onclick="openCollaboratorCourses('Prof. Aisha Al-Mannai', 'Marketing Specialist')">
+                                    <td>#C002</td>
+                                    <td>Prof. Aisha Al-Mannai</td>
+                                    <td>aisha.m@qf.edu.qa</td>
+                                    <td>Verifier</td>
+                                    <td>8</td>
+                                    <td><span class="badge active">Active</span></td>
+                                    <td><button class="view-course-btn" style="width: auto; padding: 6px 16px;" onclick="event.stopPropagation(); openCollaboratorCourses('Prof. Aisha Al-Mannai', 'Marketing Specialist')">View Courses</button></td>
+                                </tr>
+                                <tr onclick="openCollaboratorCourses('Dr. Omar Al-Thani', 'Cybersecurity Expert')">
+                                    <td>#C003</td>
+                                    <td>Dr. Omar Al-Thani</td>
+                                    <td>omar.t@qf.edu.qa</td>
+                                    <td>Senior Verifier</td>
+                                    <td>15</td>
+                                    <td><span class="badge active">Active</span></td>
+                                    <td><button class="view-course-btn" style="width: auto; padding: 6px 16px;" onclick="event.stopPropagation(); openCollaboratorCourses('Dr. Omar Al-Thani', 'Cybersecurity Expert')">View Courses</button></td>
+                                </tr>
+                                <tr onclick="openCollaboratorCourses('Ms. Fatima Al-Dosari', 'Design Lead')">
+                                    <td>#C004</td>
+                                    <td>Ms. Fatima Al-Dosari</td>
+                                    <td>fatima.d@qf.edu.qa</td>
+                                    <td>Verifier</td>
+                                    <td>6</td>
+                                    <td><span class="badge pending">Pending Review</span></td>
+                                    <td><button class="view-course-btn" style="width: auto; padding: 6px 16px;" onclick="event.stopPropagation(); openCollaboratorCourses('Ms. Fatima Al-Dosari', 'Design Lead')">View Courses</button></td>
+                                </tr>
+                                <tr onclick="openCollaboratorCourses('Dr. Khalid Ahmed', 'Business Analytics')">
+                                    <td>#C005</td>
+                                    <td>Dr. Khalid Ahmed</td>
+                                    <td>khalid.a@qf.edu.qa</td>
+                                    <td>Junior Verifier</td>
+                                    <td>4</td>
+                                    <td><span class="badge active">Active</span></td>
+                                    <td><button class="view-course-btn" style="width: auto; padding: 6px 16px;" onclick="event.stopPropagation(); openCollaboratorCourses('Dr. Khalid Ahmed', 'Business Analytics')">View Courses</button></td>
+                                </tr>
+                                <tr onclick="openCollaboratorCourses('Prof. Sara Al-Hashemi', 'Web Development')">
+                                    <td>#C006</td>
+                                    <td>Prof. Sara Al-Hashemi</td>
+                                    <td>sara.h@qf.edu.qa</td>
+                                    <td>Senior Verifier</td>
+                                    <td>10</td>
+                                    <td><span class="badge active">Active</span></td>
+                                    <td><button class="view-course-btn" style="width: auto; padding: 6px 16px;" onclick="event.stopPropagation(); openCollaboratorCourses('Prof. Sara Al-Hashemi', 'Web Development')">View Courses</button></td>
+                                </tr>
+                                <tr onclick="openCollaboratorCourses('Dr. Mohammed Al-Jaber', 'Cloud Computing')">
+                                    <td>#C007</td>
+                                    <td>Dr. Mohammed Al-Jaber</td>
+                                    <td>mohammed.j@qf.edu.qa</td>
+                                    <td>Verifier</td>
+                                    <td>7</td>
+                                    <td><span class="badge deactivated">On Leave</span></td>
+                                    <td><button class="view-course-btn" style="width: auto; padding: 6px 16px;" onclick="event.stopPropagation(); openCollaboratorCourses('Dr. Mohammed Al-Jaber', 'Cloud Computing')">View Courses</button></td>
+                                </tr>
+                                <tr onclick="openCollaboratorCourses('Ms. Noura Al-Ansari', 'Leadership Coach')">
+                                    <td>#C008</td>
+                                    <td>Ms. Noura Al-Ansari</td>
+                                    <td>noura.a@qf.edu.qa</td>
+                                    <td>Verifier</td>
+                                    <td>5</td>
+                                    <td><span class="badge active">Active</span></td>
+                                    <td><button class="view-course-btn" style="width: auto; padding: 6px 16px;" onclick="event.stopPropagation(); openCollaboratorCourses('Ms. Noura Al-Ansari', 'Leadership Coach')">View Courses</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- OPPORTUNITY MANAGEMENT SECTION -->
+                <div class="dash-section" id="opportunitySection">
+                    <div class="opportunity-header">
+                        <h4 style="font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 600; color: var(--qf-text);">Opportunities & Certifications</h4>
+                        <button class="add-opportunity-btn" onclick="openOpportunityModal()">
+                            <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                            Add New Opportunity
+                        </button>
+                    </div>
+
+                    <div class="opportunities-grid">
+                        <!-- Opportunities loaded dynamically from database -->
+                    </div>
+                </div>
+
+                <!-- REPORTS AND ANALYTICS SECTION -->
+                <div class="dash-section" id="reportsSection">
+                    <h4 style="font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 600; color: var(--qf-text); margin-bottom: 24px;">Reports & Analytics</h4>
+                    
+                    <!-- Student Flow Stats -->
+                    <div class="stats-row" style="grid-template-columns: repeat(4, 1fr); margin-bottom: 24px;">
+                        <div class="stat-card">
+                            <div class="stat-info">
+                                <h4>New Students This Month</h4>
+                                <div class="stat-value">
+                                    <span>156</span>
+                                    <span class="stat-change positive">+24%</span>
+                                </div>
+                            </div>
+                            <div class="stat-icon green">
+                                <svg viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-info">
+                                <h4>Students Completed Courses</h4>
+                                <div class="stat-value">
+                                    <span>892</span>
+                                    <span class="stat-change positive">+15%</span>
+                                </div>
+                            </div>
+                            <div class="stat-icon blue">
+                                <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-info">
+                                <h4> Verifier</h4>
+                                <div class="stat-value">
+                                    <span>234</span>
+                                    <span class="stat-change positive">+8%</span>
+                                </div>
+                            </div>
+                            <div class="stat-icon purple">
+                                <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-info">
+                                <h4>Students Left Platform</h4>
+                                <div class="stat-value">
+                                    <span>23</span>
+                                    <span class="stat-change negative">-12%</span>
+                                </div>
+                            </div>
+                            <div class="stat-icon orange">
+                                <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Analytics Grid -->
+                    <div class="reports-grid">
+                        <!-- Student Engagement Chart -->
+                        <div class="analytics-card">
+                            <div class="analytics-card-header">
+                                <div>
+                                    <h4>Student Engagement Trends</h4>
+                                    <p>Monthly active students over the year</p>
+                                </div>
+                            </div>
+                            <div class="line-chart-container">
+                                <svg class="line-chart" viewBox="0 0 400 150" preserveAspectRatio="none">
+                                    <defs>
+                                        <linearGradient id="engagementGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                                            <stop offset="0%" style="stop-color:rgba(74,144,217,0.3)"/>
+                                            <stop offset="100%" style="stop-color:rgba(74,144,217,0)"/>
+                                        </linearGradient>
+                                    </defs>
+                                    <path d="M0,100 L33,95 L66,85 L100,90 L133,75 L166,70 L200,65 L233,55 L266,50 L300,45 L333,40 L366,35 L400,30" fill="none" stroke="#4a90d9" stroke-width="2"/>
+                                    <path d="M0,100 L33,95 L66,85 L100,90 L133,75 L166,70 L200,65 L233,55 L266,50 L300,45 L333,40 L366,35 L400,30 L400,150 L0,150 Z" fill="url(#engagementGradient)"/>
+                                </svg>
+                            </div>
+                        </div>
+
+                        <!-- Completion Rates -->
+                        <div class="analytics-card">
+                            <div class="analytics-card-header">
+                                <div>
+                                    <h4>Course Completion Rates</h4>
+                                    <p>By category</p>
+                                </div>
+                            </div>
+                            <div class="bar-chart-container">
+                                <div class="bar-item">
+                                    <div class="bar blue" style="height: 85px;"></div>
+                                    <span class="bar-label">Tech</span>
+                                </div>
+                                <div class="bar-item">
+                                    <div class="bar green" style="height: 72px;"></div>
+                                    <span class="bar-label">Business</span>
+                                </div>
+                                <div class="bar-item">
+                                    <div class="bar orange" style="height: 95px;"></div>
+                                    <span class="bar-label">Design</span>
+                                </div>
+                                <div class="bar-item">
+                                    <div class="bar purple" style="height: 68px;"></div>
+                                    <span class="bar-label">Marketing</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Verification Status -->
+                        <div class="analytics-card">
+                            <div class="analytics-card-header">
+                                <div>
+                                    <h4>Verification Status</h4>
+                                    <p>External verification tracking</p>
+                                </div>
+                            </div>
+                            <div class="students-table-card" style="box-shadow: none; padding: 0;">
+                                <table class="students-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Category</th>
+                                            <th>Verified</th>
+                                            <th>Pending</th>
+                                            <th>Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Certifications</td>
+                                            <td><span class="badge certified">234</span></td>
+                                            <td>45</td>
+                                            <td>279</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Skills Assessments</td>
+                                            <td><span class="badge certified">567</span></td>
+                                            <td>89</td>
+                                            <td>656</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Badges</td>
+                                            <td><span class="badge certified">1,234</span></td>
+                                            <td>156</td>
+                                            <td>1,390</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Student Level Distribution -->
+                        <div class="analytics-card">
+                            <div class="analytics-card-header">
+                                <div>
+                                    <h4>Student Level Distribution</h4>
+                                    <p>Account tier breakdown</p>
+                                </div>
+                            </div>
+                            <div class="students-table-card" style="box-shadow: none; padding: 0;">
+                                <table class="students-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Level</th>
+                                            <th>Students</th>
+                                            <th>Percentage</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Beginner</td>
+                                            <td>456</td>
+                                            <td><span class="badge enrolled">38%</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Intermediate</td>
+                                            <td>512</td>
+                                            <td><span class="badge in-progress">42.7%</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Advanced</td>
+                                            <td>189</td>
+                                            <td><span class="badge certified">15.8%</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Expert</td>
+                                            <td>43</td>
+                                            <td><span class="badge certified">3.5%</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Course Details Modal -->
+    <div class="modal" id="courseModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalCourseTitle">Course Details</h3>
+                <button class="close-modal" onclick="closeCourseModal()">
+                    <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+            <div class="course-detail-stats" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px;">
+                <div class="course-detail-stat" style="background: var(--qf-mint-pale); padding: 16px; border-radius: 12px; text-align: center;">
+                    <div class="course-detail-stat-label" style="font-size: 12px; color: var(--qf-text-light); margin-bottom: 8px;">Total Enrolled</div>
+                    <div class="course-detail-stat-value" id="modalEnrolled" style="font-size: 24px; font-weight: 700; color: var(--qf-text);">0</div>
+                </div>
+                <div class="course-detail-stat" style="background: var(--qf-mint-pale); padding: 16px; border-radius: 12px; text-align: center;">
+                    <div class="course-detail-stat-label" style="font-size: 12px; color: var(--qf-text-light); margin-bottom: 8px;">Certified</div>
+                    <div class="course-detail-stat-value" id="modalCompleted" style="font-size: 24px; font-weight: 700; color: var(--qf-text);">0</div>
+                </div>
+                <div class="course-detail-stat" style="background: var(--qf-mint-pale); padding: 16px; border-radius: 12px; text-align: center;">
+                    <div class="course-detail-stat-label" style="font-size: 12px; color: var(--qf-text-light); margin-bottom: 8px;">In Progress</div>
+                    <div class="course-detail-stat-value" id="modalInProgress" style="font-size: 24px; font-weight: 700; color: var(--qf-text);">0</div>
+                </div>
+                <div class="course-detail-stat" style="background: var(--qf-mint-pale); padding: 16px; border-radius: 12px; text-align: center;">
+                    <div class="course-detail-stat-label" style="font-size: 12px; color: var(--qf-text-light); margin-bottom: 8px;">50% Complete</div>
+                    <div class="course-detail-stat-value" id="modalHalfDone" style="font-size: 24px; font-weight: 700; color: var(--qf-text);">0</div>
+                </div>
+            </div>
+            <div class="students-table-card" style="box-shadow: none; padding: 0;">
+                <h4>Enrolled Students</h4>
+                <table class="students-table">
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Email</th>
+                            <th>Enrollment Date</th>
+                            <th>Progress</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Ahmed Al-Mansoori</td>
+                            <td>ahmed.m@qf.edu.qa</td>
+                            <td>Jan 15, 2026</td>
+                            <td>100%</td>
+                            <td><span class="badge certified">Certified</span></td>
+                        </tr>
+                        <tr>
+                            <td>Fatima Al-Thani</td>
+                            <td>fatima.t@qf.edu.qa</td>
+                            <td>Jan 20, 2026</td>
+                            <td>50%</td>
+                            <td><span class="badge in-progress">In Progress</span></td>
+                        </tr>
+                        <tr>
+                            <td>Mohammed Hassan</td>
+                            <td>mohammed.h@qf.edu.qa</td>
+                            <td>Jan 10, 2026</td>
+                            <td>100%</td>
+                            <td><span class="badge certified">Certified</span></td>
+                        </tr>
+                        <tr>
+                            <td>Sarah Ahmed</td>
+                            <td>sarah.a@qf.edu.qa</td>
+                            <td>Jan 25, 2026</td>
+                            <td>75%</td>
+                            <td><span class="badge in-progress">In Progress</span></td>
+                        </tr>
+                        <tr>
+                            <td>Omar Khalid</td>
+                            <td>omar.k@qf.edu.qa</td>
+                            <td>Jan 5, 2026</td>
+                            <td>100%</td>
+                            <td><span class="badge certified">Certified</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Opportunity Details Modal -->
+    <div class="modal" id="opportunityDetailsModal">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h3 id="opportunityDetailTitle">Opportunity Details</h3>
+                <button class="close-modal" onclick="closeOpportunityDetailsModal()">
+                    <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+            <div style="margin-bottom: 20px;">
+                <div style="display: flex; gap: 16px; margin-bottom: 16px; flex-wrap: wrap;">
+                    <div style="background: var(--qf-mint-pale); padding: 10px 16px; border-radius: 8px;">
+                        <span style="font-size: 12px; color: var(--qf-text-light); display: block;">Duration</span>
+                        <span style="font-size: 16px; font-weight: 600; color: var(--qf-text);" id="opportunityDetailDuration">6 Months</span>
+                    </div>
+                    <div style="background: var(--qf-mint-pale); padding: 10px 16px; border-radius: 8px;">
+                        <span style="font-size: 12px; color: var(--qf-text-light); display: block;">Start Date</span>
+                        <span style="font-size: 16px; font-weight: 600; color: var(--qf-text);" id="opportunityDetailStartDate">Feb 2026</span>
+                    </div>
+                    <div style="background: var(--qf-mint-pale); padding: 10px 16px; border-radius: 8px;">
+                        <span style="font-size: 12px; color: var(--qf-text-light); display: block;">Applicants</span>
+                        <span style="font-size: 16px; font-weight: 600; color: var(--qf-text);" id="opportunityDetailApplicants">45</span>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 16px;">
+                    <h5 style="font-size: 14px; font-weight: 600; color: var(--qf-text); margin-bottom: 8px;">Description</h5>
+                    <p style="font-size: 13px; color: var(--qf-text); line-height: 1.6;" id="opportunityDetailDescription"></p>
+                </div>
+
+                <div style="margin-bottom: 16px;">
+                    <h5 style="font-size: 14px; font-weight: 600; color: var(--qf-text); margin-bottom: 8px;">Skills You'll Gain</h5>
+                    <div class="skills-tags" id="opportunityDetailSkills"></div>
+                </div>
+
+                <div style="margin-bottom: 16px;">
+                    <h5 style="font-size: 14px; font-weight: 600; color: var(--qf-text); margin-bottom: 8px;">Future Opportunities</h5>
+                    <p style="font-size: 13px; color: var(--qf-text); line-height: 1.6;" id="opportunityDetailFuture"></p>
+                </div>
+
+                <div>
+                    <h5 style="font-size: 14px; font-weight: 600; color: var(--qf-text); margin-bottom: 8px;">Prerequisites</h5>
+                    <p style="font-size: 13px; color: var(--qf-text); line-height: 1.6;" id="opportunityDetailPrereqs"></p>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <!-- <button class="modal-action-btn approve" onclick="applyToOpportunity()">Apply Now</button> -->
+                <button class="modal-action-btn reject" onclick="closeOpportunityDetailsModal()">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Collaborator Courses Modal -->
+    <div class="modal" id="collaboratorCoursesModal">
+        <div class="modal-content" style="max-width: 700px;">
+            <div class="modal-header">
+                <h3 id="collaboratorName">Collaborator's Submitted Courses</h3>
+                <button class="close-modal" onclick="closeCollaboratorCoursesModal()">
+                    <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+            <p style="color: var(--qf-text-light); margin-bottom: 20px;" id="collaboratorRole"></p>
+            
+            <div class="courses-grid" style="grid-template-columns: 1fr;">
+                <!-- Course 1 -->
+                <div class="course-card" style="margin-bottom: 16px;">
+                    <div class="course-header">
+                        <div>
+                            <h5>Advanced Data Science Certification</h5>
+                            <div class="course-category">Data Science</div>
+                        </div>
+                        <span class="status-badge pending">Pending Review</span>
+                    </div>
+                    <p style="font-size: 13px; color: var(--qf-text); margin-bottom: 12px;">Comprehensive data science program covering machine learning, deep learning, and AI applications with real-world projects.</p>
+                    <div style="display: flex; gap: 16px; margin-bottom: 16px;">
+                        <span style="font-size: 12px; color: var(--qf-text-light);">Duration: 4 Months</span>
+                        <span style="font-size: 12px; color: var(--qf-text-light);">Students: 45</span>
+                    </div>
+                    <div class="opportunity-skills">
+                        <div class="skills-tags">
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">Machine Learning</span>
+                            <span class="skill-tag">TensorFlow</span>
+                            <span class="skill-tag">Deep Learning</span>
+                        </div>
+                    </div>
+                    <div class="modal-actions" style="margin-top: 16px;">
+                        <button class="modal-action-btn approve" onclick="approveCourse('Advanced Data Science Certification')">Approve</button>
+                        <button class="modal-action-btn reject" onclick="rejectCourse('Advanced Data Science Certification')">Reject</button>
+                        <!-- <button class="view-course-btn" style="width: auto; padding: 8px 16px;" onclick="viewCourseDetails('Advanced Data Science Certification')">View Details</button> -->
+                    </div>
+                </div>
+
+                <!-- Course 2 -->
+                <div class="course-card" style="margin-bottom: 16px;">
+                    <div class="course-header">
+                        <div>
+                            <h5>Machine Learning Fundamentals</h5>
+                            <div class="course-category">AI/ML</div>
+                        </div>
+                        <span class="status-badge pending">Pending Review</span>
+                    </div>
+                    <p style="font-size: 13px; color: var(--qf-text); margin-bottom: 12px;">Learn core machine learning algorithms, supervised and unsupervised learning, model evaluation, and practical implementations.</p>
+                    <div style="display: flex; gap: 16px; margin-bottom: 16px;">
+                        <span style="font-size: 12px; color: var(--qf-text-light);">Duration: 3 Months</span>
+                        <span style="font-size: 12px; color: var(--qf-text-light);">Students: 32</span>
+                    </div>
+                    <div class="opportunity-skills">
+                        <div class="skills-tags">
+                            <span class="skill-tag">Python</span>
+                            <span class="skill-tag">Scikit-learn</span>
+                            <span class="skill-tag">Pandas</span>
+                            <span class="skill-tag">NumPy</span>
+                        </div>
+                    </div>
+                    <div class="modal-actions" style="margin-top: 16px;">
+                        <button class="modal-action-btn approve" onclick="approveCourse('Machine Learning Fundamentals')">Approve</button>
+                        <button class="modal-action-btn reject" onclick="rejectCourse('Machine Learning Fundamentals')">Reject</button>
+                        <!-- <button class="view-course-btn" style="width: auto; padding: 8px 16px;" onclick="viewCourseDetails('Machine Learning Fundamentals')">View Details</button> -->
+                    </div>
+                </div>
+
+                <!-- Course 3 -->
+                <div class="course-card" style="margin-bottom: 16px;">
+                    <div class="course-header">
+                        <div>
+                            <h5>Deep Learning Specialization</h5>
+                            <div class="course-category">AI/ML</div>
+                        </div>
+                        <span class="status-badge pending">Pending Review</span>
+                    </div>
+                    <p style="font-size: 13px; color: var(--qf-text); margin-bottom: 12px;">Deep dive into neural networks, CNNs, RNNs, transformers, and advanced deep learning architectures with PyTorch and TensorFlow.</p>
+                    <div style="display: flex; gap: 16px; margin-bottom: 16px;">
+                        <span style="font-size: 12px; color: var(--qf-text-light);">Duration: 4 Months</span>
+                        <span style="font-size: 12px; color: var(--qf-text-light);">Students: 28</span>
+                    </div>
+                    <div class="opportunity-skills">
+                        <div class="skills-tags">
+                            <span class="skill-tag">PyTorch</span>
+                            <span class="skill-tag">TensorFlow</span>
+                            <span class="skill-tag">Neural Networks</span>
+                            <span class="skill-tag">Computer Vision</span>
+                        </div>
+                    </div>
+                    <div class="modal-actions" style="margin-top: 16px;">
+                        <button class="modal-action-btn approve" onclick="approveCourse('Deep Learning Specialization')">Approve</button>
+                        <button class="modal-action-btn reject" onclick="rejectCourse('Deep Learning Specialization')">Reject</button>
+                        <!-- <button class="view-course-btn" style="width: auto; padding: 8px 16px;" onclick="viewCourseDetails('Deep Learning Specialization')">View Details</button> -->
+                    </div>
+                </div>
+
+                <!-- Course 4 -->
+                <div class="course-card" style="margin-bottom: 16px;">
+                    <div class="course-header">
+                        <div>
+                            <h5>Natural Language Processing</h5>
+                            <div class="course-category">AI/ML</div>
+                        </div>
+                        <span class="status-badge pending">Pending Review</span>
+                    </div>
+                    <p style="font-size: 13px; color: var(--qf-text); margin-bottom: 12px;">Master NLP techniques including text preprocessing, sentiment analysis, language models, transformers, and chatbots.</p>
+                    <div style="display: flex; gap: 16px; margin-bottom: 16px;">
+                        <span style="font-size: 12px; color: var(--qf-text-light);">Duration: 3 Months</span>
+                        <span style="font-size: 12px; color: var(--qf-text-light);">Students: 22</span>
+                    </div>
+                    <div class="opportunity-skills">
+                        <div class="skills-tags">
+                            <span class="skill-tag">NLTK</span>
+                            <span class="skill-tag">spaCy</span>
+                            <span class="skill-tag">Transformers</span>
+                            <span class="skill-tag">BERT</span>
+                        </div>
+                    </div>
+                    <div class="modal-actions" style="margin-top: 16px;">
+                        <button class="modal-action-btn approve" onclick="approveCourse('Natural Language Processing')">Approve</button>
+                        <button class="modal-action-btn reject" onclick="rejectCourse('Natural Language Processing')">Reject</button>
+                        <!-- <button class="view-course-btn" style="width: auto; padding: 8px 16px;" onclick="viewCourseDetails('Natural Language Processing')">View Details</button> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Opportunity Modal -->
+    <div class="modal" id="opportunityModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Opportunity</h3>
+                <button class="close-modal" onclick="closeOpportunityModal()">
+                    <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+            <form id="opportunityForm">
+                <div class="form-group">
+                    <label>Opportunity Name <span class="required">*</span></label>
+                    <div class="input-wrap">
+                        <svg class="input-icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                        <input id="oppName" type="text" placeholder="e.g. Full Stack Web Development" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Duration <span class="required">*</span></label>
+                    <div class="input-wrap">
+                        <svg class="input-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                        <input id="oppDuration" type="text" placeholder="e.g. 6 Months" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Start Date <span class="required">*</span></label>
+                    <div class="input-wrap">
+                        <svg class="input-icon" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                        <input id="oppStartDate" type="date" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Description <span class="required">*</span></label>
+                    <div class="input-wrap">
+                        <svg class="input-icon" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                        <textarea id="oppDescription" placeholder="Describe the opportunity and what participants will learn..." required></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Skills to Gain (comma separated) <span class="required">*</span></label>
+                    <div class="input-wrap">
+                        <svg class="input-icon" viewBox="0 0 24 24"><path d="M12 15l-2 5 2-2 2 2-2-5z"/><circle cx="12" cy="9" r="4"/></svg>
+                        <input id="oppSkills" type="text" placeholder="e.g. HTML, CSS, JavaScript, React" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Category <span class="required">*</span></label>
+                    <div class="input-wrap">
+                        <svg class="input-icon" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>
+                        <select id="oppCategory" required>
+                            <option value="">Select Category</option>
+                            <option value="Technology">Technology</option>
+                            <option value="Business">Business</option>
+                            <option value="Design">Design</option>
+                            <option value="Marketing">Marketing</option>
+                            <option value="Data Science">Data Science</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Future Opportunities <span class="required">*</span></label>
+                    <div class="input-wrap">
+                        <svg class="input-icon" viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        <textarea id="oppFuture" placeholder="Describe career paths and opportunities after completion..." required></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Maximum Applicants</label>
+                    <div class="input-wrap">
+                        <svg class="input-icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                        <input id="oppMaxApplicants" type="number" placeholder="e.g. 100">
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary">Create Opportunity</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Quick Add Student Modal -->
+    <div class="modal" id="quickAddModal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h3>Quick Add Student</h3>
+                <button class="close-modal" onclick="closeQuickAddModal()">
+                    <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+            <form id="quickAddForm">
+                <div class="form-group">
+                    <label>First Name <span class="required">*</span></label>
+                    <div class="input-wrap">
+                        <svg class="input-icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
+                        <input type="text" placeholder="Enter first name" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Last Name <span class="required">*</span></label>
+                    <div class="input-wrap">
+                        <svg class="input-icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
+                        <input type="text" placeholder="Enter last name" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Email Address <span class="required">*</span></label>
+                    <div class="input-wrap">
+                        <svg class="input-icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg>
+                        <input type="email" placeholder="student@qf.edu.qa" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary">Add Student</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bulk Upload Modal -->
+    <div class="modal" id="bulkUploadModal">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h3>Bulk Upload Students</h3>
+                <button class="close-modal" onclick="closeBulkUploadModal()">
+                    <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+            
+            <div class="upload-instructions">
+                <h4>Follow these steps to upload students:</h4>
+                <ol class="upload-steps">
+                    <li>Download the sample CSV file template</li>
+                    <li>Edit the CSV file with student details (First Name, Last Name, Email)</li>
+                    <li>Do not change the header row - only add student data</li>
+                    <li>Save the CSV file</li>
+                    <li>Upload the completed CSV file below</li>
+                </ol>
+                <button class="download-sample-btn" onclick="downloadSampleCSV()">
+                    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Download Sample CSV
+                </button>
+            </div>
+
+            <form id="bulkUploadForm">
+                <div class="form-group">
+                    <label class="file-upload-area" for="csvFileInput">
+                        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                        <p><strong>Click to upload</strong> or drag and drop</p>
+                        <span>CSV file (Max 5MB)</span>
+                        <input type="file" id="csvFileInput" accept=".csv" onchange="handleFileSelect(event)">
+                    </label>
+                    <div id="fileName" style="margin-top: 12px; font-size: 13px; color: var(--qf-text);"></div>
+                </div>
+                <button type="submit" class="btn-primary">Upload Students</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Quick Add Verifier Modal -->
+    <div class="modal" id="quickAddVerifierModal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h3>Quick Add Verifier</h3>
+                <button class="close-modal" onclick="closeQuickAddVerifierModal()">
+                    <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+            <form id="quickAddVerifierForm">
+                <div class="form-group">
+                    <label>First Name <span class="required">*</span></label>
+                    <div class="input-wrap">
+                        <svg class="input-icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
+                        <input type="text" placeholder="Enter first name" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Last Name <span class="required">*</span></label>
+                    <div class="input-wrap">
+                        <svg class="input-icon" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>
+                        <input type="text" placeholder="Enter last name" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Email Address <span class="required">*</span></label>
+                    <div class="input-wrap">
+                        <svg class="input-icon" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-10 6L2 7"/></svg>
+                        <input type="email" placeholder="teacher@qf.edu.qa" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Subject <span class="required">*</span></label>
+                    <div class="input-wrap">
+                        <svg class="input-icon" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+                        <input type="text" placeholder="e.g. Data Science" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary">Add Verifier</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bulk Upload Verifier Modal -->
+    <div class="modal" id="bulkUploadVerifierModal">
+        <div class="modal-content" style="max-width: 600px;">
+            <div class="modal-header">
+                <h3>Bulk Upload Verifiers</h3>
+                <button class="close-modal" onclick="closeBulkUploadVerifierModal()">
+                    <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+            
+            <div class="upload-instructions">
+                <h4>Follow these steps to upload verifiers:</h4>
+                <ol class="upload-steps">
+                    <li>Download the sample CSV file template</li>
+                    <li>Edit the CSV file with verifier details (First Name, Last Name, Email, Subject)</li>
+                    <li>Do not change the header row - only add verifier data</li>
+                    <li>Save the CSV file</li>
+                    <li>Upload the completed CSV file below</li>
+                </ol>
+                <button class="download-sample-btn" onclick="downloadSampleVerifierCSV()">
+                    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    Download Sample CSV
+                </button>
+            </div>
+
+            <form id="bulkUploadVerifierForm">
+                <div class="form-group">
+                    <label class="file-upload-area" for="csvVerifierFileInput">
+                        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                        <p><strong>Click to upload</strong> or drag and drop</p>
+                        <span>CSV file (Max 5MB)</span>
+                        <input type="file" id="csvVerifierFileInput" accept=".csv" onchange="handleVerifierFileSelect(event)">
+                    </label>
+                    <div id="verifierFileName" style="margin-top: 12px; font-size: 13px; color: var(--qf-text);"></div>
+                </div>
+                <button type="submit" class="btn-primary">Upload Verifiers</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Verifier Details Modal -->
+    <div class="modal" id="verifierDetailsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="verifierName">Verifier Details</h3>
+                <button class="close-modal" onclick="closeVerifierDetailsModal()">
+                    <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+            
+            <!-- Verifier Stats -->
+            <div class="verifier-detail-stats">
+                <div class="verifier-detail-stat">
+                    <div class="verifier-detail-stat-label">Total Students</div>
+                    <div class="verifier-detail-stat-value" id="verifierTotalStudents">0</div>
+                </div>
+                <div class="verifier-detail-stat">
+                    <div class="verifier-detail-stat-label">Students Certified</div>
+                    <div class="verifier-detail-stat-value" id="verifierCertified">0</div>
+                </div>
+                <div class="verifier-detail-stat">
+                    <div class="verifier-detail-stat-label">In Progress</div>
+                    <div class="verifier-detail-stat-value" id="verifierInProgress">0</div>
+                </div>
+            </div>
+
+            <!-- Subjects Teaching -->
+            <div class="subjects-list">
+                <h5>Subjects Teaching</h5>
+                <div id="subjectsContainer"></div>
+            </div>
+
+            <!-- Student Progress Table -->
+            <div class="students-table-card" style="box-shadow: none; padding: 0;">
+                <h4>Student Progress</h4>
+                <table class="students-table">
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Subject</th>
+                            <th>Progress</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Ahmed Al-Mansoori</td>
+                            <td>Data Science</td>
+                            <td>100%</td>
+                            <td><span class="badge certified">Certified</span></td>
+                        </tr>
+                        <tr>
+                            <td>Fatima Al-Thani</td>
+                            <td>Python Programming</td>
+                            <td>65%</td>
+                            <td><span class="badge in-progress">In Progress</span></td>
+                        </tr>
+                        <tr>
+                            <td>Mohammed Hassan</td>
+                            <td>Data Science</td>
+                            <td>100%</td>
+                            <td><span class="badge certified">Certified</span></td>
+                        </tr>
+                        <tr>
+                            <td>Sarah Ahmed</td>
+                            <td>Python Programming</td>
+                            <td>50%</td>
+                            <td><span class="badge in-progress">In Progress</span></td>
+                        </tr>
+                        <tr>
+                            <td>Omar Khalid</td>
+                            <td>Data Science</td>
+                            <td>85%</td>
+                            <td><span class="badge in-progress">In Progress</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="admin.js"></script>
+</body>
+</html>
